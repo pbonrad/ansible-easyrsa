@@ -1,0 +1,38 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - distribution: debian-7
+  - distribution: debian-8
+  - distribution: ubuntu-15.10
+  - distribution: ubuntu-16.04
+
+services:
+  - docker
+
+install:
+  # Install ansible
+  - pip install ansible
+
+  # Add ansible.cfg to pick up roles path.
+  - echo -e "[defaults]\nroles_path = ../" > ansible.cfg
+
+  # Check ansible version
+  - ansible --version
+
+  # Run docker container
+  - docker run -td --privileged --name ansible-${distribution} pbonrad/ansible-docker-base:${distribution}
+
+  # Add started docker container to the inventory file
+  - echo "ansible-${distribution} ansible_connection=docker" > tests/inventory
+
+script:
+  # Run syntax check
+  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+
+  # Run playbook role to install on docker container
+  - ansible-playbook -i tests/inventory tests/test.yml
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

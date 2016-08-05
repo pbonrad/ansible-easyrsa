@@ -1,0 +1,5 @@
+---
+- name: Install easy-rsa and create keys
+  hosts: all
+  roles:
+  - ansible-easyrsa
