@@ -10,6 +10,7 @@ easyrsa_req_city: "San Francisco"
 easyrsa_req_org: "Copyleft Certificate Co"
 easyrsa_req_email: "me@example.net"
 easyrsa_req_ou: "My Organizational Unit"
+easyrsa_req_cn: "ChangeMe"
 
 easyrsa_keysize: 2048
 easyrsa_digest: "sha256"
