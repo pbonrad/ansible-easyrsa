@@ -45,7 +45,7 @@
   command: ./easyrsa sign-req server server
   args:
     chdir: "{{easyrsa_dest}}/easyrsa3"
-    creates: "{{easyrsa_dest}}/easyrsa3/issued/server.crt"
+    creates: "{{easyrsa_dest}}/easyrsa3/pki/issued/server.crt"
 
 - name: "Create the client keys"
   command: ./easyrsa --req-cn={{item.name}} gen-req {{item.name}} nopass
@@ -58,5 +58,5 @@
   command: ./easyrsa sign-req client {{item.name}}
   args:
     chdir: "{{easyrsa_dest}}/easyrsa3"
-    creates: "{{easyrsa_dest}}/easyrsa3/issued/{{item.name}}.crt"
+    creates: "{{easyrsa_dest}}/easyrsa3/pki/issued/{{item.name}}.crt"
   with_items: "{{ easyrsa_clients }}"
